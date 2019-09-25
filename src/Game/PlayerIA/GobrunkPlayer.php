@@ -53,7 +53,7 @@ class GobrunkPlayer extends Player
         // -------------------------------------    -----------------------------------------------------
         // How can i display the result of each round ? $this->prettyDisplay()
         // -------------------------------------    -----------------------------------------------------
-        return parent::scissorsChoice();
+        return parent::paperChoice();
 
 
   }
