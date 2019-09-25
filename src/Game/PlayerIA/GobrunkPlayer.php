@@ -14,18 +14,42 @@ class GobrunkPlayer extends Player
     protected $mySide;
     protected $opponentSide;
     protected $result;
+    protected $opponentScissors;
+    protected $opponentPaper;
+    protected $opponentRock;
 
     public function getChoice()
     {
         $a = $this->result->getStatsFor($this->opponentSide);
+        $nbRound = $this->result->getNbRound() == 0 ? 1 : $this->result->getNbRound();
 
         $scissors = $a["scissors"];
         $rock = $a["rock"];
         $paper = $a["paper"];
 
-        $scissorsValue = ($scissors / ($this->result->getNbRound() == 0 ? 1 : $this->result->getNbRound())) * 0.25;
-        $rockValue = ($rock / ($this->result->getNbRound() == 0 ? 1 : $this->result->getNbRound())) * 0.25;
-        $paperValue = ($paper / ($this->result->getNbRound() == 0 ? 1 : $this->result->getNbRound())) * 0.5;
+        if($nbRound / 50 == 1) {
+            $this->opponentScissors = 1;
+            $this->opponentRock = 1;
+            $this->opponentPaper = 1;
+        }
+        else {
+            if($this->result->getLastChoiceFor($this->opponentSide) == "rock") {
+                $this->opponentRock++;
+            }
+            if($this->result->getLastChoiceFor($this->opponentSide) == "paper") {
+                $this->opponentPaper++;
+            }
+            if($this->result->getLastChoiceFor($this->opponentSide) == "scissors") {
+                $this->opponentScissors++;
+            }
+        }
+
+        $scissorsValue = ($scissors / $nbRound) * ($this->opponentScissors / ($nbRound / 50));
+        $rockValue = ($rock / $nbRound) * ($this->opponentRock/ ($nbRound / 50));
+        $paperValue = ($paper / $nbRound) * ($this->opponentPaper/ ($nbRound / 50));
+
+        print_r($this->result->getChoicesFor($this->mySide));
+
 
         if($paperValue > $rockValue && $paperValue > $scissorsValue) {
             return parent::scissorsChoice();
