@@ -21,7 +21,7 @@ class GobrunkPlayer extends Player
         $nbRound = $this->result->getNbRound() == 0 ? 1 : $this->result->getNbRound();
 
         if($nbRound < 10) {
-            return parent::paperChoice();
+            return parent::scissorsChoice();
         }
 
         $scissors = $a["scissors"];
@@ -66,7 +66,7 @@ class GobrunkPlayer extends Player
         // -------------------------------------    -----------------------------------------------------
         // How can i display the result of each round ? $this->prettyDisplay()
         // -------------------------------------    -----------------------------------------------------
-        return parent::paperChoice();
+        return parent::scissorsChoice();
 
 
   }
