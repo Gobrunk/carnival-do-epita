@@ -14,9 +14,6 @@ class GobrunkPlayer extends Player
     protected $mySide;
     protected $opponentSide;
     protected $result;
-    protected $opponentScissors;
-    protected $opponentPaper;
-    protected $opponentRock;
 
     public function getChoice()
     {
@@ -27,30 +24,12 @@ class GobrunkPlayer extends Player
         $rock = $a["rock"];
         $paper = $a["paper"];
 
-        if($nbRound / 50 == 1) {
-            $this->opponentScissors = 1;
-            $this->opponentRock = 1;
-            $this->opponentPaper = 1;
-        }
-        else {
-            if($this->result->getLastChoiceFor($this->opponentSide) == "rock") {
-                $this->opponentRock++;
-            }
-            if($this->result->getLastChoiceFor($this->opponentSide) == "paper") {
-                $this->opponentPaper++;
-            }
-            if($this->result->getLastChoiceFor($this->opponentSide) == "scissors") {
-                $this->opponentScissors++;
-            }
-        }
+        // Je defini un valeur entre 0 et 1 pour choisir le coup que je vais jouer
+        $scissorsValue = ($scissors / $nbRound);
+        $rockValue = ($rock / $nbRound);
+        $paperValue = ($paper / $nbRound);
 
-        $scissorsValue = ($scissors / $nbRound) * ($this->opponentScissors / ($nbRound / 50));
-        $rockValue = ($rock / $nbRound) * ($this->opponentRock/ ($nbRound / 50));
-        $paperValue = ($paper / $nbRound) * ($this->opponentPaper/ ($nbRound / 50));
-
-        print_r($this->result->getChoicesFor($this->mySide));
-
-
+        // En fonction des probabilités calculées au dessus, je joue le coup le moins probable
         if($paperValue > $rockValue && $paperValue > $scissorsValue) {
             return parent::scissorsChoice();
         }
