@@ -20,14 +20,18 @@ class GobrunkPlayer extends Player
         $a = $this->result->getStatsFor($this->opponentSide);
         $nbRound = $this->result->getNbRound() == 0 ? 1 : $this->result->getNbRound();
 
+        if($nbRound < 10) {
+            return parent::paperChoice();
+        }
+
         $scissors = $a["scissors"];
         $rock = $a["rock"];
         $paper = $a["paper"];
 
         // Je defini un valeur entre 0 et 1 pour choisir le coup que je vais jouer
-        $scissorsValue = ($scissors / $nbRound);
-        $rockValue = ($rock / $nbRound);
-        $paperValue = ($paper / $nbRound);
+        $scissorsValue = $scissors / $nbRound;
+        $rockValue = $rock / $nbRound;
+        $paperValue = $paper / $nbRound;
 
         // En fonction des probabilités calculées au dessus, je joue le coup le moins probable
         if($paperValue > $rockValue && $paperValue > $scissorsValue) {
