@@ -17,6 +17,19 @@ class GobrunkPlayer extends Player
 
     public function getChoice()
     {
+        $a = $this->result->getStatsFor($this->opponentSide);
+        $scissors = $a["scissors"];
+        $rock = $a["rock"];
+        $paper = $a["paper"];
+        if($paper > $rock && $paper > $scissors) {
+            return parent::scissorsChoice();
+        }
+        if($rock > $paper && $rock > $scissors) {
+            return parent::paperChoice();
+        }
+        if($scissors > $rock && $scissors > $paper) {
+            return parent::rockChoice();
+        }
         // -------------------------------------    -----------------------------------------------------
         // How to get my Last Choice           ?    $this->result->getLastChoiceFor($this->mySide) -- if 0 (first round)
         // How to get the opponent Last Choice ?    $this->result->getLastChoiceFor($this->opponentSide) -- if 0 (first round)
@@ -40,7 +53,8 @@ class GobrunkPlayer extends Player
         // -------------------------------------    -----------------------------------------------------
         // How can i display the result of each round ? $this->prettyDisplay()
         // -------------------------------------    -----------------------------------------------------
-        
-        return parent::paperChoice();            
+        return parent::scissorsChoice();
+
+
   }
 };
