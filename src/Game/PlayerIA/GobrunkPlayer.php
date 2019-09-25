@@ -18,16 +18,22 @@ class GobrunkPlayer extends Player
     public function getChoice()
     {
         $a = $this->result->getStatsFor($this->opponentSide);
+
         $scissors = $a["scissors"];
         $rock = $a["rock"];
         $paper = $a["paper"];
-        if($paper > $rock && $paper > $scissors) {
+
+        $scissorsValue = ($scissors / ($this->result->getNbRound() == 0 ? 1 : $this->result->getNbRound())) * 0.25;
+        $rockValue = ($rock / ($this->result->getNbRound() == 0 ? 1 : $this->result->getNbRound())) * 0.25;
+        $paperValue = ($paper / ($this->result->getNbRound() == 0 ? 1 : $this->result->getNbRound())) * 0.5;
+
+        if($paperValue > $rockValue && $paperValue > $scissorsValue) {
             return parent::scissorsChoice();
         }
-        if($rock > $paper && $rock > $scissors) {
+        if($rockValue > $paperValue && $rockValue > $scissorsValue) {
             return parent::paperChoice();
         }
-        if($scissors > $rock && $scissors > $paper) {
+        if($scissorsValue > $rockValue && $scissorsValue > $paperValue) {
             return parent::rockChoice();
         }
         // -------------------------------------    -----------------------------------------------------
